@@ -8,9 +8,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ImageModule } from '../image/image.module';
 import { MatListModule } from '@angular/material/list';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
-  declarations: [HeaderComponent, NavbarComponent],
+  declarations: [HeaderComponent, NavbarComponent, FooterComponent],
   imports: [
     CommonModule,
     MatButtonModule,
@@ -20,6 +21,6 @@ import { MatListModule } from '@angular/material/list';
     ImageModule,
     MatListModule,
   ],
-  exports: [HeaderComponent, NavbarComponent],
+  exports: [HeaderComponent, NavbarComponent, FooterComponent],
 })
 export class SharedModule {}
