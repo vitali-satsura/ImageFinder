@@ -11,6 +11,7 @@ import { ImageService } from './services/image.service';
 import { FlexModule } from '@angular/flex-layout';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [SearchComponent, ImageComponent, ImagesComponent],
@@ -23,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
     FlexModule,
     MatChipsModule,
     MatIconModule,
+    MatPaginatorModule,
   ],
   providers: [FlickrService, ImageService],
 })
