@@ -11,14 +11,14 @@ import { MatIconModule } from '@angular/material/icon';
   declarations: [
     HeaderComponent
   ],
-  exports: [
-    HeaderComponent
-  ],
   imports: [
     CommonModule,
     MatButtonModule,
     MatToolbarModule,
     MatIconModule
-  ]
+  ],
+  exports: [
+    HeaderComponent
+  ],
 })
 export class SharedModule { }
