@@ -17,7 +17,7 @@ export class ImageService {
           const image = {
             id: flickrImage.id,
             title: flickrImage.title,
-            imageUrl: `https://live.staticflickr.com/${flickrImage.server}-${flickrImage.id}/${flickrImage.id}_${flickrImage.secret}.jpg`,
+            imageUrl: `https://live.staticflickr.com/${flickrImage.server}/${flickrImage.id}_${flickrImage.secret}.jpg`,
           };
           images.push(image);
         });

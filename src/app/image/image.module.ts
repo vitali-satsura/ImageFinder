@@ -8,11 +8,22 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { FlickrService } from '../shared/services/flickr.service';
 import { ImageService } from './services/image.service';
+import { FlexModule } from '@angular/flex-layout';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [SearchComponent, ImageComponent, ImagesComponent],
   exports: [ImagesComponent],
-  imports: [CommonModule, MatInputModule, MatCardModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    FlexModule,
+    MatChipsModule,
+    MatIconModule,
+  ],
   providers: [FlickrService, ImageService],
 })
 export class ImageModule {}

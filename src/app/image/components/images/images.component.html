@@ -1,8 +1,15 @@
 <app-search (getSearchValue)="getImages($event)"></app-search>
 <section class="images">
-  <div class="images-container">
+  <div *ngIf="(images$ | async)?.length" class="images-container"
+       fxLayout="row wrap"
+       fxLayout.lt-sm="column"
+       fxLayoutGap="32px"
+       fxLayoutAlign="flex-start">
     <ng-container *ngFor="let image of images$ | async">
       <app-image [image]="image"></app-image>
     </ng-container>
+  </div>
+  <div class="images-empty">
+    No images here. Would you try to search for anything else?
   </div>
 </section>
