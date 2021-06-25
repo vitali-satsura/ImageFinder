@@ -1,1 +1,8 @@
-<p>images works!</p>
+<app-search (getSearchValue)="getImages($event)"></app-search>
+<section class="images">
+  <div class="images-container">
+    <ng-container *ngFor="let image of images$ | async">
+      <app-image [image]="image"></app-image>
+    </ng-container>
+  </div>
+</section>
