@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { FlickrService } from '../../shared/services/flickr.service';
 import { Image } from '../types/image';
 import { map, pluck } from 'rxjs/operators';
@@ -7,10 +7,17 @@ import { FlickrResponse } from '../../shared/types/flickrResponse';
 
 @Injectable()
 export class ImageService {
+  totalImages$: Subject<number> = new BehaviorSubject<number>(0);
+
   constructor(private flickrService: FlickrService) {}
 
-  getImages(searchValue: string): Observable<Image[]> {
-    return this.flickrService.getImages(searchValue).pipe(
+  getImages(searchValue: string, page: number, pageSize: number): Observable<Image[]> {
+    return this.flickrService.getImages(searchValue, page, pageSize).pipe(
+      map((image) => {
+        this.totalImages$.next(image.total);
+        return image;
+      }),
+      pluck('photo'),
       map((flickrImages: FlickrResponse[]) => {
         const images: Image[] = [];
         flickrImages.forEach((flickrImage: FlickrResponse) => {

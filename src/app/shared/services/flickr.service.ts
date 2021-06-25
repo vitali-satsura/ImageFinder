@@ -8,10 +8,10 @@ import { pluck } from 'rxjs/operators';
 export class FlickrService {
   constructor(private httpClient: HttpClient) {}
 
-  getImages(searchValue: string): Observable<any> {
+  getImages(searchValue: string, page: number, pageSize: number): Observable<any> {
     const url =
       `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${environment.flickrApiKey}` +
-      `&text=${searchValue}&format=json&nojsoncallback=1`;
-    return this.httpClient.get(url).pipe(pluck('photos', 'photo'));
+      `&text=${searchValue}&page=${page}&per_page=${pageSize}&format=json&nojsoncallback=1`;
+    return this.httpClient.get(url).pipe(pluck('photos'));
   }
 }
