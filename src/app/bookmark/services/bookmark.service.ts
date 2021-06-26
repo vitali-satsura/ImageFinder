@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Bookmark } from '../types/bookmark';
+import { LocalStorageService } from '../../shared/services/local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +8,11 @@ import { Bookmark } from '../types/bookmark';
 export class BookmarkService {
   bookmarks: Bookmark[] = [];
 
-  constructor() {}
+  constructor(private localStorageService: LocalStorageService) {
+    if (this.localStorageService.get('bookmarks')) {
+      this.bookmarks = this.localStorageService.get('bookmarks');
+    }
+  }
 
   addToBookmarks(bookmark: Bookmark): Bookmark[] {
     let isBookmarkAlreadyExists: boolean = false;
@@ -32,5 +37,9 @@ export class BookmarkService {
       this.bookmarks.splice(bookmarkIndex, 1);
     }
     return this.bookmarks;
+  }
+
+  saveBookmarks() {
+    this.localStorageService.set('bookmarks', this.bookmarks);
   }
 }

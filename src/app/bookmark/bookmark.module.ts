@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes } from '@angular/router';
+import { LocalStorageService } from '../shared/services/local-storage.service';
 
 const routes: Routes = [{ path: 'bookmarks', component: BookmarksComponent }];
 
@@ -21,6 +22,6 @@ const routes: Routes = [{ path: 'bookmarks', component: BookmarksComponent }];
     MatChipsModule,
     MatButtonModule,
   ],
-  providers: [BookmarkService],
+  providers: [BookmarkService, LocalStorageService],
 })
 export class BookmarkModule {}
