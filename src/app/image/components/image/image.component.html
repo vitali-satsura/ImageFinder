@@ -4,9 +4,9 @@
   </mat-card-header>
   <img mat-card-image [src]="image.imageUrl" [alt]="image.title">
   <mat-card-actions>
-    <button mat-raised-button color="primary">Bookmark it!</button>
+    <button mat-raised-button color="primary" (click)="addToBookmarks(image, tags)">Bookmark it!</button>
   </mat-card-actions>
-  <mat-form-field class="example-chip-list" appearance="fill">
+  <mat-form-field class="tags-chip-list" appearance="fill">
     <mat-label>Tags</mat-label>
     <mat-chip-list #chipList aria-label="Fruit selection">
       <mat-chip *ngFor="let tag of tags" [selectable]="selectable"

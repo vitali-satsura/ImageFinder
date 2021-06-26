@@ -12,6 +12,7 @@ import { FlexModule } from '@angular/flex-layout';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { BookmarkService } from '../bookmark/services/bookmark.service';
 
 @NgModule({
   declarations: [SearchComponent, ImageComponent, ImagesComponent],
@@ -26,6 +27,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatIconModule,
     MatPaginatorModule,
   ],
-  providers: [FlickrService, ImageService],
+  providers: [FlickrService, ImageService, BookmarkService],
 })
 export class ImageModule {}

@@ -1,0 +1,13 @@
+<mat-card class="bookmark-card">
+  <mat-card-header>
+    <mat-card-title>{{bookmark.title}}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image [src]="bookmark.imageUrl" [alt]="bookmark.title">
+  <mat-chip-list aria-label="Fish selection">
+    <mat-chip *ngFor="let tag of bookmark.tags">{{tag}}</mat-chip>
+  </mat-chip-list>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="removeBookmark(bookmark)">Remove it!</button>
+  </mat-card-actions>
+
+</mat-card>
