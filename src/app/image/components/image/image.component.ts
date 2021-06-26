@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Image } from '../../types/image';
+import { Bookmark } from '../../../bookmark/types/bookmark';
+import { BookmarkService } from '../../../bookmark/services/bookmark.service';
 
 @Component({
   selector: 'app-image',
@@ -17,7 +19,7 @@ export class ImageComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   tags: string[] = [];
 
-  constructor() {}
+  constructor(private bookmarkService: BookmarkService) {}
 
   ngOnInit(): void {}
 
@@ -39,5 +41,11 @@ export class ImageComponent implements OnInit {
     if (index >= 0) {
       this.tags.splice(index, 1);
     }
+  }
+
+  addToBookmarks(image: Image, tags: string[]): void {
+    const bookmark = new Bookmark(image, tags);
+    const bookmarks = this.bookmarkService.addToBookmarks(bookmark);
+    console.log(bookmarks);
   }
 }
