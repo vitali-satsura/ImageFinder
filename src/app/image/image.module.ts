@@ -15,6 +15,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { BookmarkService } from '../bookmark/services/bookmark.service';
 import { RouterModule, Routes } from '@angular/router';
 import { BookmarksComponent } from '../bookmark/components/bookmarks/bookmarks.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const routes: Routes = [{ path: 'images', component: ImagesComponent }];
 
@@ -31,6 +32,7 @@ const routes: Routes = [{ path: 'images', component: ImagesComponent }];
     MatChipsModule,
     MatIconModule,
     MatPaginatorModule,
+    MatProgressSpinnerModule,
   ],
   providers: [FlickrService, ImageService, BookmarkService],
 })

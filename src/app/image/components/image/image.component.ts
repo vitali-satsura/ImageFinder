@@ -46,6 +46,5 @@ export class ImageComponent implements OnInit {
   addToBookmarks(image: Image, tags: string[]): void {
     const bookmark = new Bookmark(image, tags);
     const bookmarks = this.bookmarkService.addToBookmarks(bookmark);
-    console.log(bookmarks);
   }
 }

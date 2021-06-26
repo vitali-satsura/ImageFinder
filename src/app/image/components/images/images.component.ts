@@ -18,7 +18,12 @@ export class ImagesComponent implements OnInit, OnDestroy {
 
   searchValue: string = '';
 
+  isLoading: boolean = false;
+  isImagesEmpty: boolean = false;
+
   lengthSubscription!: Subscription;
+  isLoadingSubscription!: Subscription;
+  imagesSubscription!: Subscription;
 
   constructor(private imageService: ImageService) {}
 
@@ -27,6 +32,14 @@ export class ImagesComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.lengthSubscription) {
       this.lengthSubscription.unsubscribe();
+    }
+
+    if (this.isLoadingSubscription) {
+      this.isLoadingSubscription.unsubscribe();
+    }
+
+    if (this.imagesSubscription) {
+      this.imagesSubscription.unsubscribe();
     }
   }
 
@@ -37,9 +50,18 @@ export class ImagesComponent implements OnInit, OnDestroy {
   }
 
   getImages(searchValue: string, page: number, pageSize: number): void {
+    this.isImagesEmpty = false;
+    this.isLoadingSubscription = this.imageService.isLoading$.subscribe(
+      (data) => (this.isLoading = data),
+    );
     this.images$ = this.imageService.getImages(searchValue, page, pageSize);
     this.lengthSubscription = this.imageService.totalImages$.subscribe((data) => {
       this.length = data;
+    });
+    this.images$.subscribe((data) => {
+      if (!data.length) {
+        this.isImagesEmpty = true;
+      }
     });
   }
 
