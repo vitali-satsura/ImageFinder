@@ -1,7 +1,7 @@
 <app-search (getSearchValue)="getSearchValue($event)"></app-search>
 <section class="images">
 
-  <div *ngIf="(images$ | async)?.length;else imagesEmpty" class="images-container">
+  <div *ngIf="(images$ | async)?.length" class="images-container">
     <div class="images-pagination">
       <mat-paginator [length]="length"
                      [pageSize]="pageSize"
@@ -21,9 +21,14 @@
     </div>
   </div>
 
-  <ng-template #imagesEmpty>
+  <ng-container *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </ng-container>
+
+  <ng-container *ngIf="isImagesEmpty">
     <div class="images-empty">
       No images here. Would you try to search for anything else?
     </div>
-  </ng-template>
+  </ng-container>
+
 </section>

@@ -8,10 +8,12 @@ import { FlickrResponse } from '../../shared/types/flickrResponse';
 @Injectable()
 export class ImageService {
   totalImages$: Subject<number> = new BehaviorSubject<number>(0);
+  isLoading$: Subject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private flickrService: FlickrService) {}
 
   getImages(searchValue: string, page: number, pageSize: number): Observable<Image[]> {
+    this.isLoading$.next(true);
     return this.flickrService.getImages(searchValue, page, pageSize).pipe(
       map((image) => {
         this.totalImages$.next(image.total);
@@ -28,6 +30,7 @@ export class ImageService {
           };
           images.push(image);
         });
+        this.isLoading$.next(false);
         return images;
       }),
     );

@@ -9,6 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { ImageModule } from '../image/image.module';
 import { MatListModule } from '@angular/material/list';
 import { FooterComponent } from './components/footer/footer.component';
+import { RouterModule, Routes } from '@angular/router';
 
 @NgModule({
   declarations: [HeaderComponent, NavbarComponent, FooterComponent],
@@ -20,6 +21,7 @@ import { FooterComponent } from './components/footer/footer.component';
     MatSidenavModule,
     ImageModule,
     MatListModule,
+    RouterModule,
   ],
   exports: [HeaderComponent, NavbarComponent, FooterComponent],
 })

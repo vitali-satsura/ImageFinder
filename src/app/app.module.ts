@@ -7,6 +7,12 @@ import { SharedModule } from './shared/shared.module';
 import { ImageModule } from './image/image.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BookmarkModule } from './bookmark/bookmark.module';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  { path: '', redirectTo: '/images', pathMatch: 'full' },
+  { path: '**', redirectTo: '/images', pathMatch: 'full' },
+];
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +23,7 @@ import { BookmarkModule } from './bookmark/bookmark.module';
     ImageModule,
     HttpClientModule,
     BookmarkModule,
+    RouterModule.forRoot(routes),
   ],
   providers: [],
   bootstrap: [AppComponent],
