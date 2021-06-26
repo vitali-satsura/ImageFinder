@@ -25,7 +25,9 @@ export class ImagesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   ngOnDestroy() {
-    this.lengthSubscription.unsubscribe();
+    if (this.lengthSubscription) {
+      this.lengthSubscription.unsubscribe();
+    }
   }
 
   getSearchValue(value: string): void {
