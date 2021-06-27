@@ -8,7 +8,7 @@ import { Subject, Subscription } from 'rxjs';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  username$!: Subject<any>;
+  user$!: Subject<any>;
   isLoggedIn: boolean = false;
 
   isLoggedInSubscription!: Subscription;
@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isLoggedInSubscription = this.authService.isLoggedIn$.subscribe(
       (data) => (this.isLoggedIn = data),
     );
-    this.username$ = this.authService.email$;
+    this.user$ = this.authService.user$;
   }
 
   onLogout(): void {

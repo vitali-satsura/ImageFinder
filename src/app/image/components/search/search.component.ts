@@ -13,6 +13,6 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {}
 
   search(value: string) {
-    this.getSearchValue.emit(value);
+    this.getSearchValue.emit(value.trim().toLowerCase());
   }
 }

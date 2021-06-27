@@ -1,16 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Image } from '../../types/image';
 import { Bookmark } from '../../../bookmark/types/bookmark';
 import { BookmarkService } from '../../../bookmark/services/bookmark.service';
+import { AuthService } from '../../../auth/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-image',
   templateUrl: './image.component.html',
   styleUrls: ['./image.component.scss'],
 })
-export class ImageComponent implements OnInit {
+export class ImageComponent implements OnInit, OnDestroy {
   @Input() image!: Image;
 
   selectable = true;
@@ -18,10 +20,23 @@ export class ImageComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   tags: string[] = [];
+  userUid: string = '';
 
-  constructor(private bookmarkService: BookmarkService) {}
+  userUidSubscription!: Subscription;
 
-  ngOnInit(): void {}
+  constructor(private bookmarkService: BookmarkService, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.userUidSubscription = this.authService.user$.subscribe((data) => {
+      this.userUid = data.uid;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.userUidSubscription) {
+      this.userUidSubscription.unsubscribe();
+    }
+  }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -44,7 +59,7 @@ export class ImageComponent implements OnInit {
   }
 
   addToBookmarks(image: Image, tags: string[]): void {
-    const bookmark = new Bookmark(image, tags);
-    const bookmarks = this.bookmarkService.addToBookmarks(bookmark);
+    const bookmark = new Bookmark(image, tags, this.userUid);
+    this.bookmarkService.addBookmark(bookmark);
   }
 }

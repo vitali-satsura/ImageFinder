@@ -8,11 +8,11 @@
       <mat-form-field class="form-control">
         <mat-label>Your email</mat-label>
         <input matInput formControlName="email" type="email" placeholder="Ex. pat@example.com">
-        <mat-error *ngIf="registerForm.controls.email.hasError('email') && !registerForm.controls.email.hasError('required')">
-          Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="registerForm.controls.email.hasError('required')">
+        <mat-error *ngIf="email?.errors?.required">
           Email is required
+        </mat-error>
+        <mat-error *ngIf="email?.errors?.pattern">
+          Please enter a valid email address
         </mat-error>
       </mat-form-field>
     </div>
@@ -20,16 +20,16 @@
       <mat-form-field class="form-control">
         <mat-label>Your password</mat-label>
         <input matInput formControlName="password" type="password">
-        <mat-error *ngIf="registerForm.controls.password.hasError('minLength') && !registerForm.controls.password.hasError('required')">
-          Password must be 6 characters or more
-        </mat-error>
-        <mat-error *ngIf="registerForm.controls.password.hasError('required')">
+        <mat-error *ngIf="password?.errors?.required">
           Password is required
+        </mat-error>
+        <mat-error *ngIf="password?.errors?.minLength">
+          Password must be at least 6 characters long
         </mat-error>
       </mat-form-field>
     </div>
     <div class="form-control-container">
-      <button mat-raised-button color="primary" (click)="onRegister()">Sign up</button>
+      <button mat-raised-button color="primary" [disabled]="registerForm.invalid" (click)="onRegister()">Sign up</button>
     </div>
     <div class="form-control-container">
       Do you have an account?

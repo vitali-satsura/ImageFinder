@@ -66,7 +66,6 @@ export class ImagesComponent implements OnInit, OnDestroy {
   }
 
   handlePage(event: PageEvent): void {
-    console.log(event);
     this.length = event.length;
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
