@@ -1,0 +1,37 @@
+<div class="form-container"  fxLayoutAlign="center">
+  <form class="form"
+        [formGroup]="loginForm"
+        fxLayout="column"
+        fxLayoutAlign="flex-start">
+    <h2 class="form-header">Log in</h2>
+    <div class="form-control-container">
+      <mat-form-field class="form-control">
+        <mat-label>Your email</mat-label>
+        <input matInput formControlName="email" type="email" placeholder="Ex. pat@example.com">
+        <mat-error *ngIf="loginForm.controls.email.hasError('email') && !loginForm.controls.email.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls.email.hasError('required')">
+          Email is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-control-container">
+      <mat-form-field class="form-control">
+        <mat-label>Your password</mat-label>
+        <input matInput formControlName="password" type="password">
+        <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-control-container">
+      <button mat-raised-button color="primary" (click)="onLogin()">Login</button>
+    </div>
+    <div class="form-control-container">
+      Don't you have an account?
+      <a routerLink="/register">Sign up here</a>
+    </div>
+  </form>
+</div>
+

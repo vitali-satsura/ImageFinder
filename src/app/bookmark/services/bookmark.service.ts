@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { Bookmark } from '../types/bookmark';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class BookmarkService {
   bookmarks: Bookmark[] = [];
 
