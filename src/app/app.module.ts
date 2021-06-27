@@ -11,6 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthModule } from './auth/auth.module';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 const routes: Routes = [
   { path: '', redirectTo: '/images', pathMatch: 'full' },
@@ -29,6 +30,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     AuthModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

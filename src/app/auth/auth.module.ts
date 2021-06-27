@@ -8,6 +8,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexModule } from '@angular/flex-layout';
 import { AuthService } from './services/auth.service';
+import { LocalStorageService } from '../shared/services/local-storage.service';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -24,6 +25,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     FlexModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, LocalStorageService],
 })
 export class AuthModule {}

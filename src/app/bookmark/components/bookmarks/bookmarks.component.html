@@ -1,12 +1,12 @@
 <section class="bookmarks">
 
-  <div *ngIf="bookmarks.length;else bookmarksEmpty" class="bookmarks-container">
+  <div *ngIf="(bookmarks$ | async)?.length;else bookmarksEmpty" class="bookmarks-container">
     <div class="images-container"
          fxLayout="row wrap"
          fxLayout.lt-sm="column"
          fxLayoutGap="32px"
          fxLayoutAlign="flex-start">
-      <ng-container *ngFor="let bookmark of bookmarks">
+      <ng-container *ngFor="let bookmark of bookmarks$ | async">
         <app-bookmark [bookmark]="bookmark" (removeFromBookmarks)="removeBookmark($event)"></app-bookmark>
       </ng-container>
     </div>

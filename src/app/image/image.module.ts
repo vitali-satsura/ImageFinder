@@ -16,6 +16,7 @@ import { BookmarkService } from '../bookmark/services/bookmark.service';
 import { RouterModule, Routes } from '@angular/router';
 import { BookmarksComponent } from '../bookmark/components/bookmarks/bookmarks.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 const routes: Routes = [{ path: 'images', component: ImagesComponent }];
 
@@ -33,6 +34,7 @@ const routes: Routes = [{ path: 'images', component: ImagesComponent }];
     MatIconModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    AngularFirestoreModule,
   ],
   providers: [FlickrService, ImageService, BookmarkService],
 })

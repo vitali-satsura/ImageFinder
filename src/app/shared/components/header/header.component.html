@@ -18,7 +18,7 @@
       </a>
     </div>
     <div *ngIf="isLoggedIn" class="header-logout">
-      <span class="header-username">{{username$ | async}}</span>
+      <span class="header-username">{{(user$ | async).email}}</span>
       <button mat-raised-button color="accent" class="logout-link" (click)="onLogout()">
         Log out
       </button>

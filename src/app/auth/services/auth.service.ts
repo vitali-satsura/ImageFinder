@@ -2,26 +2,33 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { LocalStorageService } from '../../shared/services/local-storage.service';
 
 @Injectable()
 export class AuthService {
   isLoggedIn$: Subject<boolean> = new BehaviorSubject<boolean>(false);
-  email$: Subject<string> = new BehaviorSubject<string>('');
+  user$: Subject<any> = new BehaviorSubject<any>(null);
 
-  constructor(private auth: AngularFireAuth, private router: Router) {}
+  constructor(
+    private auth: AngularFireAuth,
+    private router: Router,
+    private localStorageService: LocalStorageService,
+  ) {}
 
   login(email: string, password: string): void {
-    this.auth.signInWithEmailAndPassword(email, password).then((user) => {
+    this.auth.signInWithEmailAndPassword(email, password).then((data) => {
       this.isLoggedIn$.next(true);
-      this.email$.next(user.user?.email as string);
+      this.user$.next(data.user);
+      this.localStorageService.set('user', data.user);
       this.router.navigate(['']);
     });
   }
 
   register(email: string, password: string): void {
-    this.auth.createUserWithEmailAndPassword(email, password).then((user) => {
+    this.auth.createUserWithEmailAndPassword(email, password).then((data) => {
       this.isLoggedIn$.next(true);
-      console.log('register ', user);
+      this.user$.next(data.user);
+      this.localStorageService.set('user', data.user);
       this.router.navigate(['']);
     });
   }
@@ -29,6 +36,7 @@ export class AuthService {
   logout(): void {
     this.isLoggedIn$.next(false);
     this.auth.signOut();
+    this.localStorageService.remove('user');
     this.router.navigate(['']);
   }
 }

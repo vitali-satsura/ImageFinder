@@ -9,6 +9,9 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes } from '@angular/router';
 import { LocalStorageService } from '../shared/services/local-storage.service';
+import { FirebaseService } from '../shared/services/firebase.service';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AuthService } from '../auth/services/auth.service';
 
 const routes: Routes = [{ path: 'bookmarks', component: BookmarksComponent }];
 
@@ -21,7 +24,8 @@ const routes: Routes = [{ path: 'bookmarks', component: BookmarksComponent }];
     MatCardModule,
     MatChipsModule,
     MatButtonModule,
+    AngularFirestoreModule,
   ],
-  providers: [BookmarkService, LocalStorageService],
+  providers: [BookmarkService, LocalStorageService, FirebaseService],
 })
 export class BookmarkModule {}

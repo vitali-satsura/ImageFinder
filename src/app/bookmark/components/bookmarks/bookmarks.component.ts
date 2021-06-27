@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Bookmark } from '../../types/bookmark';
 import { BookmarkService } from '../../services/bookmark.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-bookmarks',
@@ -9,7 +10,7 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
   styleUrls: ['./bookmarks.component.scss'],
 })
 export class BookmarksComponent implements OnInit {
-  bookmarks: Bookmark[] = [];
+  bookmarks$!: Observable<Bookmark[]>;
 
   constructor(private bookmarkService: BookmarkService) {}
 
@@ -18,15 +19,15 @@ export class BookmarksComponent implements OnInit {
   }
 
   getBookmarks(): void {
-    this.bookmarks = this.bookmarkService.bookmarks;
+    this.bookmarks$ = this.bookmarkService.getBookmarks();
   }
 
   removeBookmark(bookmark: Bookmark): void {
-    this.bookmarks = this.bookmarkService.removeBookmark(bookmark);
+    this.bookmarkService.deleteBookmark(bookmark.id as string);
   }
 
-  @HostListener('window:beforeunload')
-  saveBookmarks() {
-    this.bookmarkService.saveBookmarks();
-  }
+  // @HostListener('window:beforeunload')
+  // saveBookmarks() {
+  //   this.bookmarkService.saveBookmarks();
+  // }
 }
