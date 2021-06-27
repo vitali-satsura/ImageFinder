@@ -8,11 +8,21 @@
       Image Finder
     </span>
     <span class="spacer"></span>
-<!--    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">-->
-<!--      <mat-icon>favorite</mat-icon>-->
-<!--    </button>-->
-<!--    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">-->
-<!--      <mat-icon>share</mat-icon>-->
-<!--    </button>-->
+    <div *ngIf="!isLoggedIn" class="header-login">
+      <a mat-raised-button routerLink="/login" class="login-link" >
+        Log in
+      </a>
+      <span class="header-link-divider">or</span>
+      <a mat-raised-button color="accent" routerLink="/register" class="register-link" >
+        Sign up
+      </a>
+    </div>
+    <div *ngIf="isLoggedIn" class="header-logout">
+      <span class="header-username">{{username$ | async}}</span>
+      <button mat-raised-button color="accent" class="logout-link" (click)="onLogout()">
+        Log out
+      </button>
+    </div>
+
   </mat-toolbar>
 </header>

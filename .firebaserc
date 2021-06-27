@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "image-finder-5e4a0": {
+      "hosting": {
+        "image-finder": [
+          "image-finder-5e4a0"
+        ]
+      }
+    }
+  }
+}

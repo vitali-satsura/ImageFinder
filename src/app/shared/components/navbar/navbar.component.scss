@@ -1,7 +1,3 @@
-mat-sidenav {
-  width: 150px;
-}
-
 .sidenav-container {
   position: absolute;
   top: 60px;
@@ -14,7 +10,8 @@ mat-sidenav {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150px;
+  width: 10%;
+  min-width: 100px;
 }
 
 

@@ -1,0 +1,39 @@
+<div class="form-container"  fxLayoutAlign="center">
+  <form class="form"
+        [formGroup]="registerForm"
+        fxLayout="column"
+        fxLayoutAlign="flex-start">
+    <h2 class="form-header">Create an account</h2>
+    <div class="form-control-container">
+      <mat-form-field class="form-control">
+        <mat-label>Your email</mat-label>
+        <input matInput formControlName="email" type="email" placeholder="Ex. pat@example.com">
+        <mat-error *ngIf="registerForm.controls.email.hasError('email') && !registerForm.controls.email.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls.email.hasError('required')">
+          Email is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-control-container">
+      <mat-form-field class="form-control">
+        <mat-label>Your password</mat-label>
+        <input matInput formControlName="password" type="password">
+        <mat-error *ngIf="registerForm.controls.password.hasError('minLength') && !registerForm.controls.password.hasError('required')">
+          Password must be 6 characters or more
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls.password.hasError('required')">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-control-container">
+      <button mat-raised-button color="primary" (click)="onRegister()">Sign up</button>
+    </div>
+    <div class="form-control-container">
+      Do you have an account?
+      <a routerLink="/login">Log in here</a>
+    </div>
+  </form>
+</div>

@@ -10,6 +10,7 @@ import { ImageModule } from '../image/image.module';
 import { MatListModule } from '@angular/material/list';
 import { FooterComponent } from './components/footer/footer.component';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthService } from '../auth/services/auth.service';
 
 @NgModule({
   declarations: [HeaderComponent, NavbarComponent, FooterComponent],
@@ -24,5 +25,6 @@ import { RouterModule, Routes } from '@angular/router';
     RouterModule,
   ],
   exports: [HeaderComponent, NavbarComponent, FooterComponent],
+  providers: [AuthService],
 })
 export class SharedModule {}

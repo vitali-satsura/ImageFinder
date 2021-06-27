@@ -8,6 +8,9 @@ import { ImageModule } from './image/image.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthModule } from './auth/auth.module';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
 
 const routes: Routes = [
   { path: '', redirectTo: '/images', pathMatch: 'full' },
@@ -24,6 +27,8 @@ const routes: Routes = [
     HttpClientModule,
     BookmarkModule,
     RouterModule.forRoot(routes),
+    AuthModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [],
   bootstrap: [AppComponent],
