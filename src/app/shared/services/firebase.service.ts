@@ -3,10 +3,10 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Bookmark } from '../../bookmark/types/bookmark';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase';
 import User = firebase.User;
 import { AuthService } from '../../auth/services/auth.service';
+import { NotifierService } from './notifier.service';
 
 @Injectable()
 export class FirebaseService {
@@ -14,19 +14,15 @@ export class FirebaseService {
 
   constructor(
     private firestore: AngularFirestore,
-    private afAuth: AngularFireAuth,
+    private notifier: NotifierService,
     private authService: AuthService,
   ) {
-    // this.afAuth.authState.subscribe((tempUser) => {
-    //   this.user = tempUser as User;
-    // });
-
     this.authService.user$.subscribe((data) => {
       this.user = data;
     });
   }
 
-  getBookmarks(): Observable<Bookmark[]> {
+  getBookmarks(): Observable<Bookmark[] | null> {
     if (this.user.uid) {
       return this.firestore
         .collection<Bookmark>(`bookmarks`, (ref) => ref.where('author', '==', `${this.user.uid}`))
@@ -41,7 +37,7 @@ export class FirebaseService {
           ),
         );
     } else {
-      return of([]);
+      return of(null);
     }
   }
 
@@ -53,9 +49,11 @@ export class FirebaseService {
       tags: bookmark.tags,
       author: bookmark.author,
     });
+    this.notifier.showNotificationWithoutButton('Image is added to bookmarks.', 'success');
   }
 
   deleteBookmark(bookmarkId: string) {
     this.firestore.doc('bookmarks/' + bookmarkId).delete();
+    this.notifier.showNotificationWithoutButton('Bookmark is deleted.', 'delete');
   }
 }

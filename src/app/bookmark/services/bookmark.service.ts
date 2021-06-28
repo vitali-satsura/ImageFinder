@@ -38,13 +38,15 @@ export class BookmarkService {
   //   this.localStorageService.set('bookmarks', this.bookmarks);
   // }
 
-  getBookmarks(): Observable<Bookmark[]> {
+  getBookmarks(): Observable<Bookmark[] | null> {
     return this.firebaseService.getBookmarks();
   }
 
   addBookmark(bookmark: Bookmark): void {
     this.getBookmarks().subscribe((data) => {
-      this.bookmarks = data;
+      if (data) {
+        this.bookmarks = data;
+      }
     });
 
     let isBookmarkAlreadyExists: boolean = false;
