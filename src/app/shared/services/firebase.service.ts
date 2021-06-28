@@ -1,35 +1,48 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Bookmark } from '../../bookmark/types/bookmark';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase';
 import User = firebase.User;
+import { AuthService } from '../../auth/services/auth.service';
 
 @Injectable()
 export class FirebaseService {
   user!: User;
 
-  constructor(private firestore: AngularFirestore, private afAuth: AngularFireAuth) {}
+  constructor(
+    private firestore: AngularFirestore,
+    private afAuth: AngularFireAuth,
+    private authService: AuthService,
+  ) {
+    // this.afAuth.authState.subscribe((tempUser) => {
+    //   this.user = tempUser as User;
+    // });
+
+    this.authService.user$.subscribe((data) => {
+      this.user = data;
+    });
+  }
 
   getBookmarks(): Observable<Bookmark[]> {
-    this.afAuth.authState.subscribe((tempUser) => {
-      this.user = tempUser as User;
-    });
-
-    return this.firestore
-      .collection<Bookmark>(`bookmarks`, (ref) => ref.where('author', '==', `${this.user.uid}`))
-      .snapshotChanges()
-      .pipe(
-        map((actions) =>
-          actions.map((a) => {
-            const data = a.payload.doc.data() as Bookmark;
-            const id = a.payload.doc.id;
-            return { id, ...data };
-          }),
-        ),
-      );
+    if (this.user.uid) {
+      return this.firestore
+        .collection<Bookmark>(`bookmarks`, (ref) => ref.where('author', '==', `${this.user.uid}`))
+        .snapshotChanges()
+        .pipe(
+          map((actions) =>
+            actions.map((a) => {
+              const data = a.payload.doc.data() as Bookmark;
+              const id = a.payload.doc.id;
+              return { id, ...data };
+            }),
+          ),
+        );
+    } else {
+      return of([]);
+    }
   }
 
   addBookmark(bookmark: Bookmark) {

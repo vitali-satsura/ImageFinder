@@ -25,9 +25,4 @@ export class BookmarksComponent implements OnInit {
   removeBookmark(bookmark: Bookmark): void {
     this.bookmarkService.deleteBookmark(bookmark.id as string);
   }
-
-  // @HostListener('window:beforeunload')
-  // saveBookmarks() {
-  //   this.bookmarkService.saveBookmarks();
-  // }
 }
