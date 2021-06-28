@@ -12,6 +12,8 @@ import { AuthModule } from './auth/auth.module';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AuthService } from './auth/services/auth.service';
+import { LocalStorageService } from './shared/services/local-storage.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/images', pathMatch: 'full' },
@@ -32,7 +34,7 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
   ],
-  providers: [],
+  providers: [AuthService, LocalStorageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
