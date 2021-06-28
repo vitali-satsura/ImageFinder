@@ -6,6 +6,9 @@ import { Bookmark } from '../../../bookmark/types/bookmark';
 import { BookmarkService } from '../../../bookmark/services/bookmark.service';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Subscription } from 'rxjs';
+import firebase from 'firebase';
+import User = firebase.User;
+import { NotifierService } from '../../../shared/services/notifier.service';
 
 @Component({
   selector: 'app-image',
@@ -20,15 +23,19 @@ export class ImageComponent implements OnInit, OnDestroy {
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   tags: string[] = [];
-  userUid: string = '';
+  user!: User;
 
   userUidSubscription!: Subscription;
 
-  constructor(private bookmarkService: BookmarkService, private authService: AuthService) {}
+  constructor(
+    private bookmarkService: BookmarkService,
+    private authService: AuthService,
+    private notifier: NotifierService,
+  ) {}
 
   ngOnInit(): void {
     this.userUidSubscription = this.authService.user$.subscribe((data) => {
-      this.userUid = data.uid;
+      this.user = data;
     });
   }
 
@@ -59,7 +66,11 @@ export class ImageComponent implements OnInit, OnDestroy {
   }
 
   addToBookmarks(image: Image, tags: string[]): void {
-    const bookmark = new Bookmark(image, tags, this.userUid);
-    this.bookmarkService.addBookmark(bookmark);
+    if (this.user) {
+      const bookmark = new Bookmark(image, tags, this.user.uid);
+      this.bookmarkService.addBookmark(bookmark);
+    } else {
+      this.notifier.showNotification('You should log in to bookmark image.', 'OK', 'error');
+    }
   }
 }

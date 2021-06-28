@@ -5,6 +5,7 @@ import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import firebase from 'firebase';
 import User = firebase.User;
 import { LocalStorageService } from './shared/services/local-storage.service';
+import { NotifierService } from './shared/services/notifier.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   userActionsSubscription!: Subscription;
 
-  constructor(private authService: AuthService, private localStorageService: LocalStorageService) {}
+  constructor(
+    private authService: AuthService,
+    private localStorageService: LocalStorageService,
+    private notifier: NotifierService,
+  ) {}
 
   ngOnInit(): void {
     this.getUser();
@@ -52,7 +57,7 @@ export class AppComponent implements OnInit, OnDestroy {
             if (x === 60) {
               this.active$.next(false);
               this.authService.logout();
-              alert('You are now logged out.');
+              this.notifier.showNotification('You are now logged out.', 'OK', 'inactive');
             }
           }),
         ),

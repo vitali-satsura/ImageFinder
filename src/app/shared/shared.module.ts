@@ -11,9 +11,12 @@ import { MatListModule } from '@angular/material/list';
 import { FooterComponent } from './components/footer/footer.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
+import { NotifierComponent } from './components/notifier/notifier.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NotifierService } from './services/notifier.service';
 
 @NgModule({
-  declarations: [HeaderComponent, NavbarComponent, FooterComponent],
+  declarations: [HeaderComponent, NavbarComponent, FooterComponent, NotifierComponent],
   imports: [
     CommonModule,
     MatButtonModule,
@@ -23,8 +26,9 @@ import { AuthService } from '../auth/services/auth.service';
     ImageModule,
     MatListModule,
     RouterModule,
+    MatSnackBarModule,
   ],
   exports: [HeaderComponent, NavbarComponent, FooterComponent],
-  providers: [AuthService],
+  providers: [AuthService, NotifierService],
 })
 export class SharedModule {}

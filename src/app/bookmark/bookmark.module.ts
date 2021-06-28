@@ -26,6 +26,6 @@ const routes: Routes = [{ path: 'bookmarks', component: BookmarksComponent }];
     MatButtonModule,
     AngularFirestoreModule,
   ],
-  providers: [BookmarkService, LocalStorageService, FirebaseService],
+  providers: [BookmarkService, LocalStorageService, FirebaseService, AuthService],
 })
 export class BookmarkModule {}

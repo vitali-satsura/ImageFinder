@@ -1,22 +1,26 @@
 <section class="bookmarks">
 
-  <div *ngIf="(bookmarks$ | async)?.length;else bookmarksEmpty" class="bookmarks-container">
+  <div *ngIf="bookmarks.length" class="bookmarks-container">
     <div class="images-container"
          fxLayout="row wrap"
          fxLayout.lt-sm="column"
          fxLayoutGap="32px"
          fxLayoutAlign="flex-start">
-      <ng-container *ngFor="let bookmark of bookmarks$ | async">
+      <ng-container *ngFor="let bookmark of bookmarks">
         <app-bookmark [bookmark]="bookmark" (removeFromBookmarks)="removeBookmark($event)"></app-bookmark>
       </ng-container>
     </div>
   </div>
 
-  <ng-template #bookmarksEmpty>
-    <div class="bookmarks-empty">
-      No bookmarks here. You can return to
-      <a routerLink="/images">search page</a>
-      and add some bookmarks.
-    </div>
-  </ng-template>
+  <div class="bookmarks-empty" *ngIf="isLoggedIn && !bookmarks.length">
+    No bookmarks here. You can return to
+    <a routerLink="/images">search page</a>
+    and add some bookmarks.
+  </div>
+
+  <div class="bookmarks-empty" *ngIf="!isLoggedIn">
+    You should
+    <a routerLink="/images">Log In</a>
+    to see your bookmarks.
+  </div>
 </section>

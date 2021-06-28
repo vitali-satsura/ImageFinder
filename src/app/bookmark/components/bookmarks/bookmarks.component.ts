@@ -1,25 +1,47 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Bookmark } from '../../types/bookmark';
 import { BookmarkService } from '../../services/bookmark.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-bookmarks',
   templateUrl: './bookmarks.component.html',
   styleUrls: ['./bookmarks.component.scss'],
 })
-export class BookmarksComponent implements OnInit {
-  bookmarks$!: Observable<Bookmark[]>;
+export class BookmarksComponent implements OnInit, OnDestroy {
+  bookmarks: Bookmark[] = [];
+  isLoggedIn: boolean = false;
 
-  constructor(private bookmarkService: BookmarkService) {}
+  bookmarksSubscription!: Subscription;
+  isLoggedInSubscription!: Subscription;
+
+  constructor(private bookmarkService: BookmarkService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.getBookmarks();
+    this.isLoggedInSubscription = this.authService.isLoggedIn$.subscribe((data) => {
+      this.isLoggedIn = data;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.bookmarksSubscription) {
+      this.bookmarksSubscription.unsubscribe();
+    }
+
+    if (this.isLoggedInSubscription) {
+      this.isLoggedInSubscription.unsubscribe();
+    }
   }
 
   getBookmarks(): void {
-    this.bookmarks$ = this.bookmarkService.getBookmarks();
+    this.bookmarksSubscription = this.bookmarkService.getBookmarks().subscribe((data) => {
+      if (data) {
+        this.bookmarks = data;
+      }
+    });
   }
 
   removeBookmark(bookmark: Bookmark): void {
